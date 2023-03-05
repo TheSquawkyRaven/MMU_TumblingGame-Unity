@@ -1,0 +1,1 @@
+For png importing, *COPY* the png file into the Assets folder

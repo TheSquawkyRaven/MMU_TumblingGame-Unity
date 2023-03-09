@@ -6,12 +6,26 @@ namespace BubbleGum
 {
     public class BlockManager : MonoBehaviour
     {
+        public static BlockManager instance;
+
         public List<List<Block>> blockMap;
         [SerializeField] private Vector2Int mapSize = new Vector2Int(6, 3);
         [SerializeField] private Vector2 offset = new Vector2(1, 1);
 
         [SerializeField] private Block blockPrefab;
         private Vector2 OriginalPos => this.transform.position;
+
+        public void Awake()
+        {
+            if (instance == null)
+            {
+                instance = this;
+            }
+            else
+            {
+                Debug.LogError( "Instance already exists", instance );
+            }
+        }
 
         private void Start()
         {
@@ -49,5 +63,19 @@ namespace BubbleGum
             Gizmos.DrawWireSphere( this.OriginalPos, this.radius );
         }
 #endif
+
+        public static void CallDrop(int i, int j)
+        {
+            List<Block> blockColumn = instance.blockMap[i];
+
+            if (j == ( blockColumn.Count - 1 ) || !blockColumn[j + 1].InPlace)
+            {
+                blockColumn[j].Drop();
+            }
+            else
+            {
+                BlockManager.CallDrop( i, j + 1 );
+            }
+        }
     }
 }

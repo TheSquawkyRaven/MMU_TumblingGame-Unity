@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace BubbleGum
 {
-    public class BottomCollider : MonoBehaviour
+    public class BounceCollider : MonoBehaviour
     {
         [SerializeField] private Vector2 center = Vector2.zero;
         [SerializeField] private float width = 1, height = 1;
@@ -27,20 +27,12 @@ namespace BubbleGum
 
         private void Update()
         {
-            Collider2D[] colliders = Physics2D.OverlapBoxAll( this.Center, this.Size, 0, layerMask );
-            foreach (Collider2D collider in colliders)
+            Collider2D collider = Physics2D.OverlapBox( this.Center, this.Size, 0, this.layerMask );
+            if (collider)
             {
-                if (collider.transform.position.y < this.transform.position.y)
-                {
-                    //Debug.Log( $"Bottom touch: {{{collider}}}", collider );
-                    movement.Jump();
-                }
+                //Debug.Log( $"Bottom touch: {{{collider}}}", collider );
+                this.movement.Jump();
             }
-        }
-
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
-            Debug.Log( $"point: {collision.GetContact( 0 ).point}" );
         }
 
 #if UNITY_EDITOR
@@ -48,6 +40,11 @@ namespace BubbleGum
         [SerializeField] private Color gizmosColor = Color.red;
         private void OnDrawGizmos()
         {
+            if (!this.enabled)
+            {
+                return;
+            }
+
             Gizmos.color = this.gizmosColor;
             Gizmos.DrawWireCube( this.Center, this.Size );
         }

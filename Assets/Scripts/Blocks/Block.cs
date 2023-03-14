@@ -21,7 +21,7 @@ namespace BubbleGum
             }
             else
             {
-                Debug.LogError( "No \"Movement\" component was found on this object", this );
+                Debug.LogError( "No 'Movement' component was found on this object", this );
             }
         }
 

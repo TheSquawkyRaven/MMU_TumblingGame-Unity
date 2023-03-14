@@ -36,23 +36,5 @@ namespace BubbleGum
             Gizmos.DrawWireCube( this.transform.position, this.transform.localScale );
         }
 #endif
-
-        //private void OnCollisionEnter2D(Collision2D collision)
-        //{
-        //    if (collision != null)
-        //    {
-        //        if (collision.gameObject.TryGetComponent( out Movement movement ))
-        //        {
-        //            if (this.transform.position.x > collision.transform.position.x)
-        //            {
-        //                movement.Jump( -1 );
-        //            }
-        //            else
-        //            {
-        //                movement.Jump( 1 );
-        //            }
-        //        }
-        //    }
-        //}
     }
 }

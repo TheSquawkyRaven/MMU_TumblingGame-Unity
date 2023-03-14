@@ -31,6 +31,11 @@ namespace BubbleGum
             if (collider)
             {
                 //Debug.Log( $"Bottom touch: {{{collider}}}", collider );
+                if (collider.TryGetComponent( out Block block ))
+                {
+                    BlockManager.CallDrop( block.i, block.j );
+                }
+
                 this.movement.Jump();
             }
         }

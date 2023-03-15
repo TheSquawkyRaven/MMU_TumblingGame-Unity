@@ -2,12 +2,13 @@
 
 namespace BubbleGum
 {
-    public class Block : MonoBehaviour
+    public class Block : MonoBehaviour, IInteractable
     {
         public int i, j;
         private Movement movement;
 
         public bool InPlace => !this.movement.enabled;
+        public bool ShouldJumpOff => true;
 
         public void Initialize(int i, int j)
         {
@@ -25,7 +26,6 @@ namespace BubbleGum
             }
         }
 
-        [ContextMenu( nameof( CallDrop ) )]
         private void CallDrop()
         {
             BlockManager.CallDrop( this.i, this.j );
@@ -44,6 +44,12 @@ namespace BubbleGum
         private void Hide()
         {
             this.gameObject.SetActive( false );
+        }
+
+        [ContextMenu( nameof( Interact ) )]
+        public void Interact()
+        {
+            this.CallDrop();
         }
     }
 }

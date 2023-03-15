@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableHorizontal: 1
+  horizontalInputCooldown: 0.2
   gravity: -0.5
   maxSpeed: {x: 8, y: 18}
 --- !u!114 &6990207860324081267

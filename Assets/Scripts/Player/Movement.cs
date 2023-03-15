@@ -7,13 +7,31 @@ namespace BubbleGum
         [SerializeField] private bool enableHorizontal = true;
 
         private float bounce =  0;
-        [SerializeField] private float gravity =  -0.01f;
+        [Tooltip("This variable is used to indicate how many seconds the player horizontal input will be ignored right after bouncing off a wall")]
+        [SerializeField] private float horizontalInputCooldown =  0.2f;
+        private bool ignoreHoriontalInput = false;
+
+        [SerializeField] private float gravity =  -0.1f;
         [SerializeField] private Vector2 maxSpeed = Vector2.one;
         private Vector2 speed;
 
-        public bool GrabityIsFlipped
+        private float HorizontalSpeed
         {
-            get; set;
+            get
+            {
+                float horizontalSpeed = this.bounce;
+                if (!this.ignoreHoriontalInput)
+                {
+                    horizontalSpeed += Input.GetAxisRaw( "Horizontal" ) * this.maxSpeed.x;
+                }
+
+                return horizontalSpeed;
+            }
+        }
+
+        private void Start()
+        {
+            WorldGravity.GrabityFlipped += this.OnGravityFlipped;
         }
 
         private void FixedUpdate()
@@ -23,14 +41,18 @@ namespace BubbleGum
         }
         private void Update()
         {
-            float x = (Input.GetAxisRaw( "Horizontal" ) * this.maxSpeed.x) + this.bounce;
-            this.speed = new Vector2( this.enableHorizontal ? x : 0, this.speed.y );
-            this.Move();
+            float x = this.enableHorizontal ? this.HorizontalSpeed : 0;
+            this.speed = new Vector2( x, this.speed.y );
 
-            if (Input.GetKeyDown( KeyCode.Space ))
+            if (this.speed != Vector2.zero)
             {
-                this.FlipGravity();
+                this.Move();
             }
+        }
+
+        private void OnDestroy()
+        {
+            WorldGravity.GrabityFlipped -= this.OnGravityFlipped;
         }
 
         public void Jump(int horizontalValue = 0)
@@ -42,15 +64,20 @@ namespace BubbleGum
             else
             {
                 this.bounce = this.maxSpeed.x * 2 * horizontalValue;
+                this.ignoreHoriontalInput = true;
+                this.Invoke( nameof( AllowHorizontalInput ), this.horizontalInputCooldown );
             }
-
-            this.Move();
+        }
+        private void AllowHorizontalInput()
+        {
+            this.ignoreHoriontalInput = false;
         }
 
         private void Move()
         {
             Vector2 speed = this.speed * Time.deltaTime;
-            if (this.GrabityIsFlipped)
+
+            if (WorldGravity.GrabityIsFlipped)
             {
                 speed.y *= -1;
             }
@@ -58,11 +85,9 @@ namespace BubbleGum
             this.transform.Translate( speed );
         }
 
-        [ContextMenu( nameof( FlipGravity ) )]
-        public void FlipGravity()
+        private void OnGravityFlipped()
         {
-            this.speed = Vector2.zero;
-            this.GrabityIsFlipped = !this.GrabityIsFlipped;
+            this.speed.y = 0;
 
             BounceCollider[] collders = this.GetComponents<BounceCollider>();
             foreach (BounceCollider collder in collders)

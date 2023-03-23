@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  m_Sprite: {fileID: -1694013764697529657, guid: 38797ddb6dfca1e42bbe02937f44d276, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -130,12 +130,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   i: 0
   j: 0
-  width: 0.4
-  height: 1.1
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  gizmosColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &780542965913636745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableHorizontal: 1
+  horizontalInputCooldown: 0.2
   gravity: -5
   maxSpeed: {x: 0, y: 15}
 --- !u!61 &3341182842430943903

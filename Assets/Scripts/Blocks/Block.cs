@@ -6,14 +6,26 @@ namespace AceInTheHole
     {
         public int i, j;
         private Movement movement;
+        private Vector2 originalPos;
 
         public bool InPlace => !this.movement.enabled;
         public bool ShouldJumpOff => true;
+
+        private void OnEnable()
+        {
+            if (this.movement)
+            {
+                this.movement.enabled = false;
+            }
+            this.transform.position = this.originalPos;
+        }
 
         public void Initialize(int i, int j)
         {
             this.i = i;
             this.j = j;
+
+            this.originalPos = this.transform.position;
 
             if (this.TryGetComponent( out Movement movement ))
             {
@@ -38,12 +50,6 @@ namespace AceInTheHole
         internal void Drop()
         {
             this.movement.enabled = true;
-            this.Invoke( nameof( Hide ), 5 );
-        }
-
-        private void Hide()
-        {
-            this.gameObject.SetActive( false );
         }
 
         [ContextMenu( nameof( Interact ) )]

@@ -11,6 +11,7 @@ namespace AceInTheHole
         public List<List<Block>> blockMap;
         [SerializeField] private Vector2Int mapSize = new Vector2Int(6, 3);
         [SerializeField] private Vector2 offset = new Vector2(1, 1);
+        [SerializeField] private float underGround = -5f;
 
         [SerializeField] private Block blockPrefab;
         private Vector2 OriginalPos => this.transform.position;
@@ -53,16 +54,19 @@ namespace AceInTheHole
             }
         }
 
-#if UNITY_EDITOR
-        [Header("Editor only")]
-        [Range(0.5f, 10.0f)]
-        [SerializeField] private float radius = 1.0f;
-        private void OnDrawGizmos()
+        public void Update()
         {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere( this.OriginalPos, this.radius );
+            foreach (List<Block> blockColumn in this.blockMap)
+            {
+                foreach (Block block in blockColumn)
+                {
+                    if (!block.InPlace && block.transform.position.y < underGround)
+                    {
+                        block.gameObject.SetActive( false );
+                    }
+                }
+            }
         }
-#endif
 
         public static void CallDrop(int i, int j)
         {
@@ -77,5 +81,19 @@ namespace AceInTheHole
                 BlockManager.CallDrop( i, j + 1 );
             }
         }
+
+#if UNITY_EDITOR
+        [Header("Editor only")]
+        [Range(0.5f, 10.0f)]
+        [SerializeField] private float radius = 1.0f;
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere( this.OriginalPos, this.radius );
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube( Vector2.up * this.underGround, Vector2.one * this.radius );
+        }
+#endif
     }
 }

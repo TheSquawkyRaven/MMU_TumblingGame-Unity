@@ -1,4 +1,4 @@
-﻿namespace BubbleGum
+﻿namespace AceInTheWhole
 {
     public interface IInteractable
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BubbleGum
+namespace AceInTheWhole
 {
     public class BounceCollider : MonoBehaviour
     {

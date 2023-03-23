@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace BubbleGum
+namespace AceInTheWhole
 {
     public class WorldGravity : MonoBehaviour, IInteractable
     {

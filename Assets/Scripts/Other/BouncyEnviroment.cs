@@ -8,6 +8,11 @@ namespace AceInTheHole
 
         private void Update()
         {
+            this.CheckCollision();
+        }
+
+        private void CheckCollision()
+        {
             Collider2D collider = Physics2D.OverlapBox( this.transform.position, this.transform.localScale, 0, playerLayer);
             if (collider)
             {
@@ -25,7 +30,6 @@ namespace AceInTheHole
                 }
             }
         }
-
 
 #if UNITY_EDITOR
         [Header("Editor only")]

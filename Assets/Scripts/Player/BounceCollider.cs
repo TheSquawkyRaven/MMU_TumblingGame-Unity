@@ -37,14 +37,25 @@ namespace AceInTheHole
 
                     if (interactable.ShouldJumpOff)
                     {
-                        this.movement.Jump();
+                        this.CallJump();
                     }
                 }
                 else
                 {
-                    this.movement.Jump();
+                    this.CallJump();
                 }
             }
+        }
+
+        private void CallJump()
+        {
+            this.movement.Jump();
+            this.enabled = false;
+            this.Invoke( nameof( this.JumpCooldown ), 1f );
+        }
+        private void JumpCooldown()
+        {
+            this.enabled = true;
         }
 
 #if UNITY_EDITOR

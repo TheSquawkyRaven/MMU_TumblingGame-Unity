@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-namespace AceInTheWhole
+namespace AceInTheHole
 {
     public class BlockManager : MonoBehaviour
     {

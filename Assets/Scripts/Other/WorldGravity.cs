@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace AceInTheWhole
+namespace AceInTheHole
 {
     public class WorldGravity : MonoBehaviour, IInteractable
     {

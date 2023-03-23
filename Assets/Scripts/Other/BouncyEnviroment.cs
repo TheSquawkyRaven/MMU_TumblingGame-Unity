@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace AceInTheWhole
+namespace AceInTheHole
 {
     public class BouncyEnviroment : MonoBehaviour
     {

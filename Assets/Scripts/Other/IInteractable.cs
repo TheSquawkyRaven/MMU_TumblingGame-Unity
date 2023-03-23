@@ -1,4 +1,4 @@
-﻿namespace AceInTheWhole
+﻿namespace AceInTheHole
 {
     public interface IInteractable
     {

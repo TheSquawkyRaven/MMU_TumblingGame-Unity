@@ -17,6 +17,10 @@ namespace AceInTheHole
         private void OnEnable()
         {
             this.currentSpeed = this.startingSpeed;
+
+            Vector2 pos = this.transform.position;
+            pos.x = 0;
+            this.transform.position = pos;
         }
         private void OnDisable()
         {

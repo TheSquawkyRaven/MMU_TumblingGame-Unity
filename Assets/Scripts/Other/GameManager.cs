@@ -8,7 +8,13 @@ namespace AceInTheHole
 
         public void Awake()
         {
-            Application.targetFrameRate = 60;
+            //Application.targetFrameRate = 60;
+
+#if UNITY_EDITOR
+            UnityEngine.Debug.unityLogger.logEnabled = true;
+#else
+            UnityEngine.Debug.unityLogger.logEnabled = false;
+#endif
 
             if (instance == null)
             {

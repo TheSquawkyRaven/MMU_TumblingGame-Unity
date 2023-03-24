@@ -44,12 +44,12 @@ namespace AceInTheHole
                 for (int j = 0; j < this.mapSize.y; j++)
                 {
                     Block block = Instantiate( this.blockPrefab, Vector3.zero, Quaternion.identity );
-                    block.Initialize( i, j );
-                    this.blockMap[i].Add( block );
 
                     float yOffset = (-this.offset.y * j) - 0.5f;
                     float yPos = this.OriginalPos.y + yOffset;
-                    block.transform.position = new Vector2( xPos, yPos );
+
+                    block.Initialize( i, j, new Vector2( xPos, yPos ) );
+                    this.blockMap[i].Add( block );
                 }
             }
         }
@@ -60,9 +60,9 @@ namespace AceInTheHole
             {
                 foreach (Block block in blockColumn)
                 {
-                    if (!block.InPlace && block.transform.position.y < underGround)
+                    if (block.gameObject.activeSelf && !block.InPlace && block.transform.position.y < underGround)
                     {
-                        block.gameObject.SetActive( false );
+                        block.Hide();
                     }
                 }
             }

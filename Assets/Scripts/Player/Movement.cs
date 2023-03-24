@@ -29,10 +29,10 @@ namespace AceInTheHole
             }
         }
 
-        private void Start()
-        {
-            WorldGravity.GrabityFlipped += this.OnGravityFlipped;
-        }
+        //private void Start()
+        //{
+        //    WorldGravity.GrabityFlipped += this.OnGravityFlipped;
+        //}
 
         private void FixedUpdate()
         {
@@ -50,10 +50,10 @@ namespace AceInTheHole
             }
         }
 
-        private void OnDestroy()
-        {
-            WorldGravity.GrabityFlipped -= this.OnGravityFlipped;
-        }
+        //private void OnDestroy()
+        //{
+        //    WorldGravity.GrabityFlipped -= this.OnGravityFlipped;
+        //}
 
         public void Jump(int horizontalValue = 0)
         {
@@ -77,10 +77,10 @@ namespace AceInTheHole
         {
             Vector2 speed = this.speed * Time.deltaTime;
 
-            if (WorldGravity.GrabityIsFlipped)
-            {
-                speed.y *= -1;
-            }
+            //if (WorldGravity.GrabityIsFlipped)
+            //{
+            //    speed.y *= -1;
+            //}
 
             this.transform.Translate( speed );
         }

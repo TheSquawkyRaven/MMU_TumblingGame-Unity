@@ -1,25 +1,23 @@
-﻿using System;
-
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace AceInTheHole
 {
     public class WorldGravity : MonoBehaviour, IInteractable
     {
-        public static event Action GrabityFlipped;
+        //public static event Action GrabityFlipped;
 
-        public bool ShouldJumpOff => false;
-        public static bool GrabityIsFlipped
-        {
-            get; private set;
-        }
+        public bool ShouldJumpOff => true;
+        //public static bool GrabityIsFlipped
+        //{
+        //    get; private set;
+        //}
 
-        [SerializeField] private float interactionCooldown = 2f;
+        private float interactionCooldown = 1f;
         private new Collider2D collider;
 
         private void Awake()
         {
-            WorldGravity.GrabityFlipped = null;
+            //WorldGravity.GrabityFlipped = null;
             if (this.TryGetComponent( out Collider2D collider ))
             {
                 this.collider = collider;
@@ -30,16 +28,25 @@ namespace AceInTheHole
             }
         }
 
-        private void Start()
-        {
-            WorldGravity.GrabityIsFlipped = false;
-        }
+        //private void Start()
+        //{
+        //    WorldGravity.GrabityIsFlipped = false;
+        //}
 
         private void FlipGravity()
         {
             //Debug.Log( "FlipGravity" );
-            WorldGravity.GrabityIsFlipped = !WorldGravity.GrabityIsFlipped;
-            GrabityFlipped?.Invoke();
+            //WorldGravity.GrabityIsFlipped = !WorldGravity.GrabityIsFlipped;
+            //GrabityFlipped?.Invoke();
+
+            Block[] allBlocks = FindObjectsByType<Block>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            foreach (Block block in allBlocks)
+            {
+                if (!block.gameObject.activeSelf)
+                {
+                    block.gameObject.SetActive( true );
+                }
+            }
 
             this.collider.enabled = false;
             this.Invoke( nameof( Cooldown ), this.interactionCooldown );

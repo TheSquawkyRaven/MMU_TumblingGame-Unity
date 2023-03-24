@@ -18,6 +18,7 @@ namespace AceInTheHole
 
         public static float RightBorder => instance.borderDistance;
         public static float LeftBorder => -instance.borderDistance;
+        private float RandomPosX => Random.Range( LeftBorder, RightBorder );
 
         public void Awake()
         {
@@ -50,7 +51,8 @@ namespace AceInTheHole
             //Debug.Log( "shouldSpawn: " + shouldSpawn );
             if (shouldSpawn)
             {
-                _ = enemies.Get();
+                Enemy enemy = enemies.Get();
+                enemy.transform.position = new Vector2( this.RandomPosX, this.transform.position.y );
             }
         }
 
@@ -62,8 +64,7 @@ namespace AceInTheHole
         }
         private Enemy SpawnNewInstance(Enemy prefab)
         {
-            float randomX = Random.Range(LeftBorder, RightBorder);
-            return Instantiate( prefab, new Vector2( randomX, this.transform.position.y ), Quaternion.identity );
+            return Instantiate( prefab, new Vector2( this.RandomPosX, this.transform.position.y ), Quaternion.identity );
         }
 
 #if UNITY_EDITOR

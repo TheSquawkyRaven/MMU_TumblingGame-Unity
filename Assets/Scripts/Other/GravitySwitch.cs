@@ -2,11 +2,11 @@
 
 namespace AceInTheHole
 {
-    public class WorldGravity : MonoBehaviour, IInteractable
+    public class GravitySwitch : MonoBehaviour, IInteractable
     {
         //public static event Action GrabityFlipped;
 
-        public bool ShouldJumpOff => true;
+        public bool ShouldJumpOff => false;
         //public static bool GrabityIsFlipped
         //{
         //    get; private set;
@@ -17,7 +17,7 @@ namespace AceInTheHole
 
         private void Awake()
         {
-            //WorldGravity.GrabityFlipped = null;
+            //GravitySwitch.GrabityFlipped = null;
             if (this.TryGetComponent( out Collider2D collider ))
             {
                 this.collider = collider;
@@ -30,13 +30,13 @@ namespace AceInTheHole
 
         //private void Start()
         //{
-        //    WorldGravity.GrabityIsFlipped = false;
+        //    GravitySwitch.GrabityIsFlipped = false;
         //}
 
         private void FlipGravity()
         {
             //Debug.Log( "FlipGravity" );
-            //WorldGravity.GrabityIsFlipped = !WorldGravity.GrabityIsFlipped;
+            //GravitySwitch.GrabityIsFlipped = !GravitySwitch.GrabityIsFlipped;
             //GrabityFlipped?.Invoke();
 
             Block[] allBlocks = FindObjectsByType<Block>(FindObjectsInactive.Include, FindObjectsSortMode.None);

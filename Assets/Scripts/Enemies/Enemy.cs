@@ -7,11 +7,21 @@ namespace AceInTheHole
         [SerializeField] private LayerMask layer;
         [SerializeField] private float startingSpeed = 0.1f, maxSpeed = 1f, speedAcceleration = 0.1f;
         private float currentSpeed;
+        private SpriteRenderer spriteRenderer;
 
         public float CurrentSpeed => this.IsDirectionRight ? currentSpeed : -currentSpeed;
         public bool IsDirectionRight
         {
             get; set;
+        }
+
+        private void Awake()
+        {
+            this.spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
+            if (this.spriteRenderer == null)
+            {
+                Debug.LogError( "There is no 'SpriteRenderer' component on this object", this );
+            }
         }
 
         private void OnEnable()
@@ -35,12 +45,24 @@ namespace AceInTheHole
         public void Update()
         {
             this.transform.Translate( new Vector2( this.CurrentSpeed * Time.deltaTime, 0 ) );
+            this.CheckSpriteDirection();
+
             if (EnemySpawner.ShouldFlip( this ))
             {
                 this.IsDirectionRight = !this.IsDirectionRight;
             }
 
             this.CheckCollision();
+        }
+
+        private void CheckSpriteDirection()
+        {
+            if (this.CurrentSpeed == 0)
+            {
+                return;
+            }
+
+            this.spriteRenderer.flipX = this.CurrentSpeed < 0;
         }
 
         private void CheckCollision()

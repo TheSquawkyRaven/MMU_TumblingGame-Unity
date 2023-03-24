@@ -1,3 +1,5 @@
+using System.Collections;
+
 using UnityEngine;
 
 namespace AceInTheHole
@@ -8,21 +10,25 @@ namespace AceInTheHole
         [SerializeField] private float width = 1, height = 1;
         [SerializeField] private LayerMask layerMask;
 
+        [SerializeField] private float resetSpeed;
         private Movement movement;
+        private Vector2 originalPos;
 
         private Vector2 Size => new Vector2( this.width, this.height );
         private Vector2 Center => this.center + (Vector2)this.transform.position;
 
         private void Awake()
         {
-            if (this.TryGetComponent( out Movement movement ))
-            {
-                this.movement = movement;
-            }
-            else
+            this.movement = this.GetComponent<Movement>();
+            if (this.movement == null)
             {
                 Debug.LogError( "Movement wasn't found", this );
             }
+        }
+
+        private void Start()
+        {
+            this.originalPos = this.transform.position;
         }
 
         private void Update()
@@ -34,10 +40,17 @@ namespace AceInTheHole
                 if (collider.TryGetComponent( out IInteractable interactable ))
                 {
                     interactable.Interact();
-
                     if (interactable.ShouldJumpOff)
                     {
                         this.CallJump();
+                    }
+                    else
+                    {
+                        if (collider.GetComponent<GravitySwitch>() != null)
+                        {
+                            this.movement.enabled = false;
+                            _ = this.StartCoroutine( this.ResetPosition() );
+                        }
                     }
                 }
                 else
@@ -56,6 +69,18 @@ namespace AceInTheHole
         private void JumpCooldown()
         {
             this.enabled = true;
+        }
+
+        private IEnumerator ResetPosition()
+        {
+            while (Mathf.Abs( this.originalPos.y - this.transform.position.y ) > 0.001f)
+            {
+                float yPos = Mathf.MoveTowards(this.transform.position.y, this.originalPos.y, this.resetSpeed);
+                this.transform.position = new Vector2( this.transform.position.x, yPos );
+                yield return null;
+            }
+
+            this.movement.enabled = true;
         }
 
 #if UNITY_EDITOR

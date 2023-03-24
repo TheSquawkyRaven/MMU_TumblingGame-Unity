@@ -48,7 +48,11 @@ namespace AceInTheHole
                     float yOffset = (-this.offset.y * j) - 0.5f;
                     float yPos = this.OriginalPos.y + yOffset;
 
-                    block.Initialize( i, j, new Vector2( xPos, yPos ) );
+                    Block.Level level =
+                        j == 0 ? Block.Level.Top :
+                        j == this.mapSize.y - 1 ? Block.Level.Bot :
+                        Block.Level.Mid;
+                    block.Initialize( i, j, new Vector2( xPos, yPos ), level );
                     this.blockMap[i].Add( block );
                 }
             }
@@ -60,7 +64,7 @@ namespace AceInTheHole
             {
                 foreach (Block block in blockColumn)
                 {
-                    if (block.gameObject.activeSelf && !block.InPlace && block.transform.position.y < underGround)
+                    if (!block.GoingUp && block.gameObject.activeSelf && !block.InPlace && block.transform.position.y < underGround)
                     {
                         block.Hide();
                     }

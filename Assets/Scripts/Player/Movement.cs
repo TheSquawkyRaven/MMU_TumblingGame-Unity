@@ -14,6 +14,7 @@ namespace AceInTheHole
         [SerializeField] private float gravity =  -0.1f;
         [SerializeField] private Vector2 maxSpeed = Vector2.one;
         private Vector2 speed;
+        private SpriteRenderer spriteRenderer;
 
         private float HorizontalSpeed
         {
@@ -29,9 +30,23 @@ namespace AceInTheHole
             }
         }
 
+        private void Awake()
+        {
+            this.spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
+            if (this.spriteRenderer == null)
+            {
+                Debug.LogError( "There is no 'SpriteRenderer' component on this object", this );
+            }
+        }
+
+        private void OnEnable()
+        {
+            this.speed = Vector2.zero;
+        }
+
         //private void Start()
         //{
-        //    WorldGravity.GrabityFlipped += this.OnGravityFlipped;
+        //    GravitySwitch.GrabityFlipped += this.OnGravityFlipped;
         //}
 
         private void FixedUpdate()
@@ -47,12 +62,13 @@ namespace AceInTheHole
             if (this.speed != Vector2.zero)
             {
                 this.Move();
+                this.CheckSpriteDirection();
             }
         }
 
         //private void OnDestroy()
         //{
-        //    WorldGravity.GrabityFlipped -= this.OnGravityFlipped;
+        //    GravitySwitch.GrabityFlipped -= this.OnGravityFlipped;
         //}
 
         public void Jump(int horizontalValue = 0)
@@ -77,12 +93,22 @@ namespace AceInTheHole
         {
             Vector2 speed = this.speed * Time.deltaTime;
 
-            //if (WorldGravity.GrabityIsFlipped)
+            //if (GravitySwitch.GrabityIsFlipped)
             //{
             //    speed.y *= -1;
             //}
 
             this.transform.Translate( speed );
+        }
+
+        private void CheckSpriteDirection()
+        {
+            if (this.speed.x == 0)
+            {
+                return;
+            }
+
+            this.spriteRenderer.flipX = this.speed.x < 0;
         }
 
         private void OnGravityFlipped()

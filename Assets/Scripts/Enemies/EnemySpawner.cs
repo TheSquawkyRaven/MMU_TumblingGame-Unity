@@ -62,7 +62,8 @@ namespace AceInTheHole
         }
         private Enemy SpawnNewInstance(Enemy prefab)
         {
-            return Instantiate( prefab, this.transform.position, Quaternion.identity );
+            float randomX = Random.Range(LeftBorder, RightBorder);
+            return Instantiate( prefab, new Vector2( randomX, this.transform.position.y ), Quaternion.identity );
         }
 
 #if UNITY_EDITOR

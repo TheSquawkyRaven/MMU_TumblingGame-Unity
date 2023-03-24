@@ -5,6 +5,7 @@ namespace AceInTheHole
     public class Block : MonoBehaviour, IInteractable
     {
         public int i, j;
+        private int killed;
         private Movement movement;
         private Vector2 originalPos;
 
@@ -18,14 +19,16 @@ namespace AceInTheHole
                 this.movement.enabled = false;
             }
             this.transform.position = this.originalPos;
+            this.killed = 0;
         }
 
-        public void Initialize(int i, int j)
+        public void Initialize(int i, int j, Vector2 position)
         {
             this.i = i;
             this.j = j;
 
-            this.originalPos = this.transform.position;
+            this.originalPos = position;
+            this.transform.position = this.originalPos;
 
             if (this.TryGetComponent( out Movement movement ))
             {
@@ -56,6 +59,17 @@ namespace AceInTheHole
         public void Interact()
         {
             this.CallDrop();
+        }
+
+        public void Hide()
+        {
+            this.gameObject.SetActive( false );
+            PlayerScore.EnemiesKilled( killed );
+        }
+
+        public void GetKill()
+        {
+            killed++;
         }
     }
 }

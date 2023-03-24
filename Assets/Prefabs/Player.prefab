@@ -115,6 +115,7 @@ GameObject:
   - component: {fileID: 6990207860324081264}
   - component: {fileID: 6990207860324081267}
   - component: {fileID: 609474359588041102}
+  - component: {fileID: 6279727115772874018}
   - component: {fileID: 6458348580516661298}
   m_Layer: 8
   m_Name: Player
@@ -153,7 +154,7 @@ MonoBehaviour:
   enableHorizontal: 1
   horizontalInputCooldown: 0.2
   gravity: -0.5
-  maxSpeed: {x: 6, y: 15}
+  maxSpeed: {x: 7, y: 15}
 --- !u!114 &6990207860324081267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   center: {x: 0, y: 0.5}
-  width: 0.6
+  width: 0.5
   height: 0.05
   layerMask:
     serializedVersion: 2
@@ -186,12 +187,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   center: {x: 0, y: -0.5}
-  width: 0.6
+  width: 0.5
   height: 0.05
   layerMask:
     serializedVersion: 2
     m_Bits: 1664
   gizmosColor: {r: 1, g: 0, b: 0, a: 1}
+--- !u!114 &6279727115772874018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6990207860324081261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a82f8588bdd283438d197f683771fff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 0}
 --- !u!61 &6458348580516661298
 BoxCollider2D:
   m_ObjectHideFlags: 0

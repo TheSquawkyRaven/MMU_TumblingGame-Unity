@@ -25,7 +25,7 @@ namespace AceInTheHole
         private void OnDisable()
         {
             // TODO: implement dying logic
-            // Add score to player
+            // Add s to player
         }
 
         public void FixedUpdate()
@@ -49,14 +49,15 @@ namespace AceInTheHole
             if (collider)
             {
                 //Debug.Log( $"touched an object", this );
-                if (collider.gameObject.TryGetComponent( out BounceCollider bounce ))
+                if (collider.gameObject.TryGetComponent( out PlayerScore score ))
                 {
-                    // TODO: Kill player
+                    score.GameOver();
                 }
                 else if (collider.gameObject.TryGetComponent( out Block block ))
                 {
                     if (block.transform.position.y > this.transform.position.y)
                     {
+                        block.GetKill();
                         this.gameObject.SetActive( false );
                     }
                 }
